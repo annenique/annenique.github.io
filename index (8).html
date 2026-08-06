@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Antonise Stewart — Biology & Game Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sage: #3A7D5C; --sage-lt: #EBF4EF;
+      --blue: #2563EB; --blue-lt: #EEF3FF;
+      --ink: #1A1A1A; --mid: #4A5568;
+      --border: #E2E8E4; --white: #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); line-height: 1.75; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-name { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--ink); }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--sage); }
+
+    .wrapper { max-width: 740px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    .hero {
+      display: flex; align-items: center; gap: 2.5rem;
+      padding-bottom: 3rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem;
+    }
+    .hero img {
+      width: 115px; height: 115px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--white); box-shadow: 0 0 0 2px var(--sage); flex-shrink: 0;
+    }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--ink); margin-bottom: 0.5rem; }
+    .hero h1 span { color: var(--sage); }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
+    .tag { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 100px; }
+    .tag-bio { background: var(--sage-lt); color: var(--sage); }
+    .tag-tech { background: var(--blue-lt); color: var(--blue); }
+    .hero p { font-size: 0.95rem; color: var(--mid); line-height: 1.75; }
+
+    .section { margin-bottom: 3rem; }
+    h2 {
+      font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--ink);
+      margin-bottom: 1.3rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--sage-lt);
+    }
+    .about p { color: var(--mid); margin-bottom: 0.9rem; font-size: 0.96rem; }
+    .about p:last-child { margin-bottom: 0; }
+
+    .game-card {
+      display: block; text-decoration: none; color: inherit;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 1.5rem; margin-bottom: 1rem; transition: all 0.2s; background: var(--white);
+    }
+    .game-card:hover { border-color: var(--sage); box-shadow: 0 4px 20px rgba(58,125,92,0.1); transform: translateY(-2px); }
+    .game-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.6rem; }
+    .game-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); }
+    .game-platform { font-size: 0.74rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+    .platform-sage { background: var(--sage-lt); color: var(--sage); }
+    .platform-blue { background: var(--blue-lt); color: var(--blue); }
+    .game-card p { color: var(--mid); font-size: 0.91rem; line-height: 1.7; margin-bottom: 0.9rem; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.38rem; margin-bottom: 0.85rem; }
+    .chip { font-size: 0.73rem; padding: 0.17rem 0.52rem; border-radius: 100px; border: 1px solid var(--border); color: var(--mid); }
+    .game-link { font-size: 0.86rem; font-weight: 600; color: var(--sage); }
+
+    .exp-entry { padding: 1.2rem 1.4rem; border-left: 3px solid var(--border); margin-bottom: 1.3rem; transition: border-color 0.2s; }
+    .exp-entry:hover { border-left-color: var(--sage); }
+    .exp-entry:last-child { margin-bottom: 0; }
+    .exp-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+    .exp-title { font-weight: 600; font-size: 0.96rem; color: var(--ink); }
+    .exp-date { font-size: 0.79rem; color: var(--mid); white-space: nowrap; }
+    .exp-org { font-size: 0.83rem; color: var(--sage); font-weight: 500; margin-bottom: 0.65rem; }
+    .exp-list { list-style: none; }
+    .exp-list li { font-size: 0.9rem; color: var(--mid); padding-left: 1rem; position: relative; margin-bottom: 0.3rem; line-height: 1.65; }
+    .exp-list li::before { content: '–'; position: absolute; left: 0; opacity: 0.4; }
+
+    .skill-row { margin-bottom: 1.1rem; }
+    .skill-label { font-size: 0.77rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--sage); margin-bottom: 0.5rem; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.38rem; }
+    .pill { font-size: 0.79rem; padding: 0.24rem 0.62rem; border-radius: 100px; border: 1px solid var(--border); color: var(--mid); }
+
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.83rem; color: var(--mid); }
+    footer a { color: var(--sage); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 540px) {
+      .hero { flex-direction: column; text-align: center; gap: 1.4rem; }
+      .hero-tags { justify-content: center; }
+      .game-header { flex-direction: column; gap: 0.35rem; }
+      .exp-top { flex-direction: column; gap: 0.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">Antonise</span>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+<div class="wrapper">
+
+  <div class="hero">
+    <img src="images/profile.jpg" alt="Antonise Stewart" />
+    <div>
+      <h1>Hi, I'm <span>Antonise Stewart</span>.</h1>
+      <div class="hero-tags">
+        <span class="tag tag-bio">Molecular Biology</span>
+        <span class="tag tag-tech">Game Development</span>
+        <span class="tag tag-bio">Lab Research</span>
+        <span class="tag tag-tech">Interactive Design</span>
+      </div>
+      <p>Student with a background in molecular and cell biology, hands-on research experience, and a growing passion for game development and creative programming. I am interested in how science and technology can come together to make complex ideas accessible.</p>
+    </div>
+  </div>
+
+  <div class="section about" id="about">
+    <h2>About</h2>
+    <p>I am especially interested in how science, psychology, and interactive design can come together — whether that is in a game, a research project, or something in between. My work spans immunology, microbiology, and evolutionary genetics research across several UC San Diego labs, and building browser-based biology games from scratch.</p>
+    <p>My goals are to continue developing my skills in programming and game design, further my education in biology and technology, and find ways to connect the two in work that is genuinely useful to people.</p>
+  </div>
+
+  <div class="section" id="games">
+    <h2>Games</h2>
+
+    <a href="https://annenique.github.io/FOLD/" target="_blank" class="game-card">
+      <div class="game-header">
+        <span class="game-title">FOLD — Protein Explorer</span>
+        <span class="game-platform platform-sage">Web · Three.js</span>
+      </div>
+      <p>A 3D browser game teaching protein structure, enzyme function, and amino acid chemistry through four interactive modules. Watch proteins denature in real time by adjusting temperature, pH, and salt. No download needed.</p>
+      <div class="chip-row">
+        <span class="chip">HTML / JavaScript</span>
+        <span class="chip">Three.js</span>
+        <span class="chip">GitHub Pages</span>
+        <span class="chip">Free to play</span>
+      </div>
+      <span class="game-link">Play FOLD</span>
+    </a>
+
+    <a href="https://enique347.itch.io/crispr-gene-editor" target="_blank" class="game-card">
+      <div class="game-header">
+        <span class="game-title">CRISPR Gene Editor</span>
+        <span class="game-platform platform-blue">Unity 6.5 · C#</span>
+      </div>
+      <p>An 8-level Unity game teaching DNA mutation and CRISPR-Cas9 gene editing through real genetic diseases — Sickle Cell, Cystic Fibrosis, Huntington's Disease, and five others. Build guide RNAs to direct Cas9 to the correct target.</p>
+      <div class="chip-row">
+        <span class="chip">Unity 6.5</span>
+        <span class="chip">C#</span>
+        <span class="chip">WebGL</span>
+        <span class="chip">8 levels</span>
+      </div>
+      <span class="game-link">Play CRISPR Gene Editor</span>
+    </a>
+
+    <p style="margin-top:0.9rem;font-size:0.82rem;color:var(--mid);">Both games built during an 8-week STEMULATE research internship at UC San Diego, Ujima Security &amp; Privacy Research Lab, mentored by Dr. Imani N. S. Munyaka.</p>
+  </div>
+
+  <div class="section" id="experience">
+    <h2>Research & Experience</h2>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <span class="exp-title">STEMULATE Summer Research Intern</span>
+        <span class="exp-date">Summer 2026</span>
+      </div>
+      <div class="exp-org">Ujima Security & Privacy Research Lab · UC San Diego</div>
+      <ul class="exp-list">
+        <li>Developed FOLD and CRISPR Gene Editor from scratch in 8 weeks using Three.js and Unity 6.5</li>
+        <li>Designed gameplay grounded in real molecular biology: protein denaturation, CRISPR-Cas9 mechanics, enzyme specificity, and DNA base pairing</li>
+        <li>Used AI-assisted programming to prototype, debug, and refine without prior game development experience</li>
+        <li>Presented research at the STEMULATE symposium with an academic poster and slide deck</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <span class="exp-title">Immunology Research</span>
+        <span class="exp-date">Dec 2023 – Aug 2025</span>
+      </div>
+      <div class="exp-org">Goldrath Lab · UC San Diego</div>
+      <ul class="exp-list">
+        <li>Supported research on T cell exhaustion and cancer immunotherapy under Dr. Nicole Scharping</li>
+        <li>Led an independent CRISPR-mediated knockout and overexpression study of three E3 ubiquitin ligases to evaluate T cell expansion over 7 days</li>
+        <li>Performed retroviral transduction, MACS cell isolation, flow cytometry, and immunofluorescence imaging</li>
+        <li>Contributed experimental data to research on protein homeostasis and T cell differentiation later published in Cell (2026)</li>
+        <li>Co-author on SITC 2024 conference abstract: "Protein Homeostasis Enables T Cell Differentiation Potential and Sustains TIL Function in Cancer"</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <span class="exp-title">Antimicrobial Resistance Research</span>
+        <span class="exp-date">Jan 2023 – Mar 2024</span>
+      </div>
+      <div class="exp-org">Boz Institute</div>
+      <ul class="exp-list">
+        <li>Isolated and cultured vancomycin-resistant Enterococci from the Tijuana River Estuary and a San Diego wastewater facility</li>
+        <li>Extracted bacterial DNA, amplified target regions via PCR, and identified strains via Nanopore sequencing and BLAST comparison</li>
+        <li>Presented research findings at the Boz Institute's Showcase Symposium</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <span class="exp-title">Evolutionary Genetics Research</span>
+        <span class="exp-date">Feb 2023 – Dec 2023</span>
+      </div>
+      <div class="exp-org">Burton Lab, Scripps Institution of Oceanography · UC San Diego</div>
+      <ul class="exp-list">
+        <li>Studied thermal tolerance and hybrid growth in the copepod Tigriopus californicus</li>
+        <li>Supported monitoring of spawning fish species in marine protected areas around San Diego</li>
+        <li>Performed DNA extraction and sequencing for species identification and ecological monitoring</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section" id="skills">
+    <h2>Skills</h2>
+    <div class="skill-row">
+      <div class="skill-label">Game Development</div>
+      <div class="pill-row">
+        <span class="pill">Unity 6.5</span><span class="pill">C#</span>
+        <span class="pill">Three.js</span><span class="pill">WebGL</span>
+        <span class="pill">HTML / CSS / JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">Programming</div>
+      <div class="pill-row">
+        <span class="pill">Python</span><span class="pill">Java</span><span class="pill">C++</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">Molecular Biology & Lab</div>
+      <div class="pill-row">
+        <span class="pill">CRISPR-Cas9</span><span class="pill">PCR</span>
+        <span class="pill">Gel Electrophoresis</span><span class="pill">Cell Culture</span>
+        <span class="pill">Flow Cytometry</span><span class="pill">Animal Husbandry</span>
+        <span class="pill">DNA Expression Analysis</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">Research</div>
+      <div class="pill-row">
+        <span class="pill">Experimental Design</span><span class="pill">Data Analysis</span>
+        <span class="pill">Scientific Writing</span><span class="pill">Poster Presentation</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="color:var(--mid);font-size:0.88rem;text-align:center;padding-top:1rem;">
+    Open to collaboration, research opportunities, and game development projects.
+  </p>
+
+</div>
+
+<footer>
+  <p>Antonise Stewart &nbsp;·&nbsp; <a href="https://annenique.github.io/FOLD/" target="_blank">FOLD</a> &nbsp;·&nbsp; <a href="https://enique347.itch.io/crispr-gene-editor" target="_blank">CRISPR Gene Editor</a></p>
+</footer>
+
+</body>
+</html>
